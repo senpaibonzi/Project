@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Project</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'Courier New', Courier, monospace;
+      height: 100vh;
+      background: linear-gradient(135deg, #ffb6c1, #ffe4e1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .message-box {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(255, 105, 180, 0.4);
+      max-width: 600px;
+      width: 90%;
+      font-size: 1.1rem;
+      color: #333;
+      line-height: 1.6;
+      z-index: 1;
+    }
+
+    #typedText {
+      white-space: pre-wrap;
+      display: inline;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      height: 20px;
+      background-color: black;
+      animation: blink 1s step-start infinite;
+      vertical-align: bottom;
+      margin-left: 2px;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    .heart {
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      background-color: red;
+      transform: rotate(45deg);
+      animation: floatUp 10s linear infinite;
+      opacity: 0;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      border-radius: 50%;
+      position: absolute;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        bottom: -50px;
+        opacity: 0;
+      }
+      30% {
+        opacity: 0.8;
+      }
+      100% {
+        bottom: 110%;
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .message-box {
+        padding: 20px;
+        font-size: 1rem;
+        width: 95%;
+      }
+
+      .heart {
+        width: 15px;
+        height: 15px;
+      }
+
+      .heart::before,
+      .heart::after {
+        width: 15px;
+        height: 15px;
+      }
+
+      .cursor {
+        height: 16px;
+        width: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="message-box">
+    <span id="typedText"></span><span class="cursor"></span>
+  </div>
+
+  <!-- Floating hearts -->
+  <script>
+    const heartCount = 30;
+
+    for (let i = 0; i < heartCount; i++) {
+      let heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = `${Math.random() * 100}vw`;
+      heart.style.animationDuration = `${6 + Math.random() * 5}s`;
+      heart.style.animationDelay = `${Math.random() * 5}s`;
+      document.body.appendChild(heart);
+    }
+  </script>
+
+  <!-- Typing effect -->
+  <script>
+    const message = `Dear Love,
+
+Happy 1st Monthsary! ❤️
+
+Baby, di ko akalain na aabot tayo sa ganito. Grabe kasi syempre, 4 months of talking and 1 month official na — super thankful ako sayo. Sa 4 months ng total nating pag-uusap, sobrang saya ko na nakilala kita. Kung hindi dahil sa pag-picture mo with me, hindi ko mararamdaman tong pagmamahal na natatanggap ko galing sayo. Madalas matigas ang ulo ko pero nagagawa mo pa ring maging understanding at tiisin ako. Sorry sa mga ganon hehe. Mahal kita nang sobra baby. Pag balik mo na yung physical gift hehe, eto muna.
+
+Happy 1st monthsary, mahal ko. I love you.
+
+Forever yours,
+Jofy`;
+
+    const typedText = document.getElementById("typedText");
+    let index = 0;
+
+    function typeCharacter() {
+      if (index < message.length) {
+        typedText.textContent += message.charAt(index);
+        index++;
+        setTimeout(typeCharacter, 50);
+      }
+    }
+
+    typeCharacter();
+  </script>
+</body>
+</html>
